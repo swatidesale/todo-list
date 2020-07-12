@@ -8,7 +8,7 @@ import { getUsers, deleteUser } from '../../actions'
 class Users extends Component {
   state = {
     createUser: false,
-    isLoading: false,
+    buttonText: '',
     user: {},
   }
 
@@ -19,14 +19,13 @@ class Users extends Component {
 
   handelCreateUser = () => {
     this.setState({ createUser: true })
-    this.setState({ isLoading: true })
+    this.setState({ buttonText: 'Create' })
   }
 
   handleCreateUserClose = () => {
     const { dispatch } = this.props
 
     this.setState({ createUser: false })
-    this.setState({ isLoading: false })
     dispatch(getUsers())
   }
 
@@ -38,11 +37,12 @@ class Users extends Component {
 
   handelEditUser = (record) => {
     this.setState({ createUser: true })
+    this.setState({ buttonText: 'Edit '})
     this.setState({ user: record })
   }
 
   render() {
-    const { createUser, isLoading, user } = this.state
+    const { createUser, user, buttonText } = this.state
     const { userDetails } = this.props
 
     const UsersTableColumns = [
@@ -77,9 +77,9 @@ class Users extends Component {
           onCancel={ this.handleCreateUserClose }
           isCreateUser={ createUser }
           user={ user }
+          buttonText={ buttonText }
         />
         <Table 
-          loading={ isLoading }
           columns={ UsersTableColumns } 
           dataSource={ userDetails.users } 
           rowKey={ rowKeys => rowKeys.name }

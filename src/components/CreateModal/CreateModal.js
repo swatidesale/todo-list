@@ -49,7 +49,7 @@ class CreateModal extends Component {
   }
 
   render() {
-    const { title, onCancel, isCreateUser, isAddTodo, user, todo } = this.props
+    const { title, onCancel, isCreateUser, isAddTodo, user, todo, buttonText } = this.props
     const { isSavingInProgress } = this.state
 
     const layout = {
@@ -116,7 +116,7 @@ class CreateModal extends Component {
               htmlType="submit"
               loading={ isSavingInProgress }
             >
-              Create
+              { buttonText }
             </Button>
           </Form.Item>
         </Form>

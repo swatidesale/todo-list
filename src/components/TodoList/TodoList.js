@@ -9,6 +9,7 @@ class TodoList extends Component {
   state = {
     addTodo: false,
     todo: {},
+    buttonText: '',
   }
 
   componentDidMount() {
@@ -18,6 +19,7 @@ class TodoList extends Component {
 
   handleAddTodo = () => {
     this.setState({ addTodo: true })
+    this.setState({ buttonText: 'Create' })
   }
 
   handleAddTodoClose = () => {
@@ -35,12 +37,13 @@ class TodoList extends Component {
 
   handelEditTodo = (record) => {
     this.setState({ addTodo: true })
+    this.setState({ buttonText: 'Edit' })
     this.setState({ todo: record })
   }
 
   render() {
     const { todoList } = this.props
-    const { addTodo, todo } = this.state
+    const { addTodo, todo, buttonText } = this.state
 
     const columns = [
       {
@@ -81,6 +84,7 @@ class TodoList extends Component {
           isAddTodo={ addTodo }
           onCancel={ this.handleAddTodoClose }
           todo={ todo }
+          buttonText={ buttonText }
         />
         <Table columns={columns} dataSource={ todoList.todos } />
       </section>
