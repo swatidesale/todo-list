@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Table } from 'antd'
+import { Button, Table, Popconfirm } from 'antd'
 import { connect } from 'react-redux'
 
 import CreateModal from '../CreateModal'
@@ -56,12 +56,15 @@ class Users extends Component {
         render: (text, record) => (
           <Button.Group>
             <Button onClick={() => { this.handelEditUser(record) }}>Edit</Button>
-            <Button
-               type="danger"
-               onClick={ () => { this.handleDeleteUser(record) }}
+            <Popconfirm
+              placement="topRight"
+              title='Are you sure want to delete this todo?'
+              okText="Yes"
+              cancelText="No"
+              onConfirm={ () => { this.handleDeleteUser(record) } }
             >
-              Delete
-            </Button>
+              <Button danger>Delete</Button>
+            </Popconfirm>
           </Button.Group>
         ),
       },
@@ -69,7 +72,7 @@ class Users extends Component {
 
     return(
       <section>
-        <Button size='large' onClick={ this.handelCreateUser }>
+        <Button type="primary" size='large' onClick={ this.handelCreateUser } style={{ marginBottom: '10px' }}>
           Create User
         </Button>
         <CreateModal 

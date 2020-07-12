@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Table } from 'antd'
+import { Button, Table, Popconfirm } from 'antd'
 import { connect } from 'react-redux'
 
 import { getTodoList, deleteTodo } from '../../actions'
@@ -49,26 +49,26 @@ class TodoList extends Component {
       {
         title: 'Action',
         dataIndex: 'action',
-        key: 'action',
       },
       {
         title: 'Date Added',
         dataIndex: 'date_added',
-        key: 'date_added',
       },
       {
         title: 'Operation',
         dataIndex: 'operation',
-        key: 'operation',
         render: (text, record) => (
           <Button.Group>
             <Button onClick={() => { this.handelEditTodo(record) }}>Edit</Button>
-            <Button
-              danger
-              onClick={ () => { this.handleDeleteTodo(record) }}
+            <Popconfirm
+              placement="topRight"
+              title='Are you sure want to delete this todo?'
+              okText="Yes"
+              cancelText="No"
+              onConfirm={ () => { this.handleDeleteTodo(record) } }
             >
-              Delete
-            </Button>
+              <Button danger>Delete</Button>
+            </Popconfirm>
           </Button.Group>
         ),
       },
@@ -76,7 +76,7 @@ class TodoList extends Component {
 
     return(
       <section>
-        <Button size='large' onClick={ this.handleAddTodo }>
+        <Button type="primary" size='large' onClick={ this.handleAddTodo } style={{ marginBottom: '10px' }}>
           Add Todo
         </Button>
         <CreateModal 
@@ -86,7 +86,11 @@ class TodoList extends Component {
           todo={ todo }
           buttonText={ buttonText }
         />
-        <Table columns={columns} dataSource={ todoList.todos } />
+        <Table 
+          columns={columns} 
+          dataSource={ todoList.todos } 
+          rowKey={ rowKeys => rowKeys.action }
+        />
       </section>
     )
   }
